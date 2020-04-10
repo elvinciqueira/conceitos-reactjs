@@ -5,14 +5,14 @@ import "./styles.css";
 import api from "./services/api";
 
 function App() {
-  const [repositories, setRepository] = useState([]);
+  const [repositories, setRepositories] = useState([]);
 
   const loadRepository = async () => {
     const response = await api.get("repositories");
 
     const { data } = response;
 
-    setRepository(data);
+    setRepositories(data);
   };
 
   useEffect(() => {
@@ -29,14 +29,16 @@ function App() {
 
     const { data } = response;
 
-    setRepository([...repositories, data]);
+    setRepositories([...repositories, data]);
   }
 
   async function handleRemoveRepository(id) {
     try {
       await api.delete(`repositories/${id}`);
 
-      setRepository(repositories.filter((repository) => repository.id !== id));
+      setRepositories(
+        repositories.filter((repository) => repository.id !== id)
+      );
     } catch (error) {
       alert("Erro ao deletar um repositório");
     }
